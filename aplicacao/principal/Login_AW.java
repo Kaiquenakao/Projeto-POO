@@ -11,11 +11,11 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 // Import ConexaoBD.java
-import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
 public class Login_AW {
@@ -85,16 +85,35 @@ public class Login_AW {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					java.sql.Connection conn = ConexaoBD.generateConnection();
-					String query = "Insert into login(usuario, senha, nivel) values("
-							+ "'Teste@123', '123','Funcionario')";
+					String usuario = txtUsuario.getText();
+					String senha = new String(txtSenha.getPassword());
+					System.out.println(senha);
+					String query = "select * from login where usuario = '" + usuario + "' and senha = '" + senha + "'" ;
 					PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
-					comando.execute();
+					ResultSet resultado = comando.executeQuery();
+					if(resultado.next()) {
+				
+						String nivel = resultado.getString("nivel");
+						if(nivel.equals("Funcionario")) {
+							TelaPrincipalFuncionario tela = new TelaPrincipalFuncionario();
+							tela.MostrarTela();
+							frame.setVisible(false);
+						}
+						else if(nivel.equals("Gerente")) {
+							TelaPrincipal tela = new TelaPrincipal();
+							tela.MostrarTela();
+							frame.setVisible(false);
+						}
+						
+					}else {
+						JOptionPane.showMessageDialog(null, "Usuário ou senha Inválido");
+					}
 					comando.close();
-					JOptionPane.showMessageDialog(null, "Sucesso");
+					
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, "Falha");
+					JOptionPane.showMessageDialog(null, "Erro de conexão");
 				}
 				
 				
