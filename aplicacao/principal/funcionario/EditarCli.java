@@ -4,22 +4,26 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class EditarCli {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtCPF;
+	private JTextField txtUsuario;
+	private JTextField txtContato;
+	private JTextField txtCPFD;
+	private JTextField txtNome;
+	private JTextField txtEndereco;
 
 	/**
 	 * Launch the application.
@@ -58,10 +62,67 @@ public class EditarCli {
 		lblEditarCliente.setBounds(151, 11, 136, 36);
 		frame.getContentPane().add(lblEditarCliente);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(162, 58, 113, 20);
-		frame.getContentPane().add(textField);
+		JComboBox comboEstado = new JComboBox();
+		comboEstado.setEnabled(false);
+		comboEstado.setEditable(true);
+		comboEstado.setBounds(295, 164, 48, 20);
+		comboEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO"}));
+		frame.getContentPane().add(comboEstado);
+		
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
+		txtCPF.setBounds(162, 58, 113, 20);
+		frame.getContentPane().add(txtCPF);
+		
+		JButton btnLimpar = new JButton("Limpar");
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				principal.Cliente cli = new principal.Cliente();
+				cli.setNome(txtNome.getText());
+				cli.setUsuario(txtUsuario.getText());
+				cli.setContato(txtContato.getText());
+				cli.setCPF(txtCPF.getText());
+				cli.setEndereco(txtEndereco.getText());
+				cli.setEstado(comboEstado.getSelectedItem().toString());
+				
+				try {
+					cli.editar(txtCPF.getText());
+					JOptionPane.showMessageDialog(null, "Cliente editado");
+					
+					
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(null, "Falha na edição");
+					
+					e1.printStackTrace();
+				}
+				
+				finally {
+					txtCPF.setText("");
+					txtNome.setText("");
+					txtCPFD.setText("");
+					comboEstado.setSelectedIndex(0);
+					txtUsuario.setText("");
+					txtEndereco.setText("");
+					txtContato.setText("");
+					
+					txtNome.setEnabled(false);
+					txtCPFD.setEnabled(false);
+					txtNome.setEnabled(false);
+					comboEstado.setEnabled(false);
+					txtUsuario.setEnabled(false);
+					txtEndereco.setEnabled(false);
+					txtContato.setEnabled(false);
+					btnEditar.setEnabled(false);
+					btnLimpar.setEnabled(false);
+					txtCPF.setEnabled(true);
+				}
+			}
+		});
+		btnEditar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnEditar.setEnabled(false);
+		btnEditar.setBounds(227, 208, 89, 23);
+		frame.getContentPane().add(btnEditar);
 		
 		JButton btnVoltar = new JButton("<");
 		btnVoltar.addActionListener(new ActionListener() {
@@ -74,13 +135,93 @@ public class EditarCli {
 		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
 		btnVoltar.setBounds(10, 20, 48, 23);
 		frame.getContentPane().add(btnVoltar);
+
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtCPF.setText("");
+				txtNome.setText("");
+				txtCPFD.setText("");
+				comboEstado.setSelectedIndex(0);
+				txtUsuario.setText("");
+				txtEndereco.setText("");
+				txtContato.setText("");
+				
+				txtNome.setEnabled(false);
+				txtCPFD.setEnabled(false);
+				txtNome.setEnabled(false);
+				comboEstado.setEnabled(false);
+				txtUsuario.setEnabled(false);
+				txtEndereco.setEnabled(false);
+				txtContato.setEnabled(false);
+				btnEditar.setEnabled(false);
+				btnLimpar.setEnabled(false);
+				txtCPF.setEnabled(true);
+			}
+		});
+		btnLimpar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnLimpar.setEnabled(false);
+		btnLimpar.setBounds(120, 208, 77, 23);
+		frame.getContentPane().add(btnLimpar);
 		
 		JLabel lblNewLabel_1 = new JLabel("Insira o CPF");
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(72, 60, 86, 14);
 		frame.getContentPane().add(lblNewLabel_1);
 		
+
+		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(txtCPF.getText().length() != 11) {
+					JOptionPane.showMessageDialog(null, "CPF não representa 11 caracteres");
+					return;
+				}
+				
+				principal.Cliente cli = new principal.Cliente();
+				cli.setCPF(txtCPF.getText());
+				
+				try {
+					ResultSet resultado = cli.consultarCPF();
+					if(resultado.next()) {
+						txtNome.setText(resultado.getString("nome"));
+						txtCPFD.setText(resultado.getString("CPF"));
+						comboEstado.setSelectedItem(resultado.getString("estado"));
+						txtUsuario.setText(resultado.getString("usuario"));
+						txtEndereco.setText(resultado.getString("endereco"));
+						txtContato.setText(resultado.getString("contato"));
+						
+						//Habilitando
+						txtNome.setEnabled(true);
+						txtCPFD.setEnabled(true);
+						txtNome.setEnabled(true);
+						comboEstado.setEnabled(true);
+						txtUsuario.setEnabled(true);
+						txtEndereco.setEnabled(true);
+						txtContato.setEnabled(true);
+						btnEditar.setEnabled(true);
+						btnLimpar.setEnabled(true);
+						txtCPF.setEnabled(false);
+					}else {
+						JOptionPane.showMessageDialog(null, "CPF não encontrado");
+						txtNome.setText("");
+						txtCPFD.setText("");
+						comboEstado.setSelectedIndex(0);
+						txtUsuario.setText("");
+						txtEndereco.setText("");
+						txtContato.setText("");
+						btnEditar.setEnabled(false);
+						btnLimpar.setEnabled(false);
+						txtCPF.setEnabled(true);
+						
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnBuscar.setFont(new Font("Arial", Font.BOLD, 13));
 		btnBuscar.setBounds(285, 56, 89, 23);
 		frame.getContentPane().add(btnBuscar);
@@ -90,17 +231,17 @@ public class EditarCli {
 		lblNewLabel_1_1_1_1.setBounds(295, 95, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_1_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setEnabled(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(295, 116, 113, 20);
-		frame.getContentPane().add(textField_1);
+		txtUsuario = new JTextField();
+		txtUsuario.setEnabled(false);
+		txtUsuario.setColumns(10);
+		txtUsuario.setBounds(295, 116, 113, 20);
+		frame.getContentPane().add(txtUsuario);
 		
-		textField_2 = new JTextField();
-		textField_2.setEnabled(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(151, 116, 113, 20);
-		frame.getContentPane().add(textField_2);
+		txtContato = new JTextField();
+		txtContato.setEnabled(false);
+		txtContato.setColumns(10);
+		txtContato.setBounds(151, 116, 113, 20);
+		frame.getContentPane().add(txtContato);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Contato");
 		lblNewLabel_1_1_1.setFont(new Font("Arial", Font.BOLD, 13));
@@ -117,51 +258,33 @@ public class EditarCli {
 		lblNewLabel_1_1_1_2.setBounds(295, 147, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_1_2);
 		
-		JComboBox comboEstado = new JComboBox();
-		comboEstado.setEnabled(false);
-		comboEstado.setEditable(true);
-		comboEstado.setBounds(295, 164, 48, 20);
-		frame.getContentPane().add(comboEstado);
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setColumns(10);
-		textField_3.setBounds(10, 164, 113, 20);
-		frame.getContentPane().add(textField_3);
+		txtCPFD = new JTextField();
+		txtCPFD.setEnabled(false);
+		txtCPFD.setColumns(10);
+		txtCPFD.setBounds(10, 164, 113, 20);
+		frame.getContentPane().add(txtCPFD);
 		
 		JLabel lblNewLabel_1_1_2 = new JLabel("CPF");
 		lblNewLabel_1_1_2.setFont(new Font("Arial", Font.BOLD, 13));
 		lblNewLabel_1_1_2.setBounds(10, 147, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_2);
 		
-		textField_4 = new JTextField();
-		textField_4.setEnabled(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(10, 116, 113, 20);
-		frame.getContentPane().add(textField_4);
+		txtNome = new JTextField();
+		txtNome.setEnabled(false);
+		txtNome.setColumns(10);
+		txtNome.setBounds(10, 116, 113, 20);
+		frame.getContentPane().add(txtNome);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Nome");
 		lblNewLabel_1_1.setFont(new Font("Arial", Font.BOLD, 13));
 		lblNewLabel_1_1.setBounds(10, 95, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1);
 		
-		JButton btnLimpar = new JButton("Limpar");
-		btnLimpar.setFont(new Font("Arial", Font.BOLD, 13));
-		btnLimpar.setEnabled(false);
-		btnLimpar.setBounds(120, 208, 77, 23);
-		frame.getContentPane().add(btnLimpar);
-		
-		JButton btnEditar = new JButton("Editar");
-		btnEditar.setFont(new Font("Arial", Font.BOLD, 13));
-		btnEditar.setEnabled(false);
-		btnEditar.setBounds(227, 208, 89, 23);
-		frame.getContentPane().add(btnEditar);
-		
-		textField_5 = new JTextField();
-		textField_5.setEnabled(false);
-		textField_5.setColumns(10);
-		textField_5.setBounds(151, 164, 113, 20);
-		frame.getContentPane().add(textField_5);
+		txtEndereco = new JTextField();
+		txtEndereco.setEnabled(false);
+		txtEndereco.setColumns(10);
+		txtEndereco.setBounds(151, 164, 113, 20);
+		frame.getContentPane().add(txtEndereco);
 		
 		
 		

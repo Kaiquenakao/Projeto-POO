@@ -63,6 +63,13 @@ public class GerenciamentoCli {
 		frame.getContentPane().add(btnVendas);
 		
 		JButton btnClientes = new JButton("Consultar");
+		btnClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ConsultarCli cli = new ConsultarCli();
+				cli.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
 		btnClientes.setFont(new Font("Arial", Font.BOLD, 12));
 		btnClientes.setBounds(84, 164, 105, 36);
 		frame.getContentPane().add(btnClientes);

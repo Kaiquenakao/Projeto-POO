@@ -7,18 +7,22 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class DeletarCli {
 
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField txtCPF;
+	private JTextField txtUsuario;
+	private JTextField txtEstado;
+	private JTextField txtEndereco;
+	private JTextField txtCPFD;
+	private JTextField txtNome;
 
 	/**
 	 * Launch the application.
@@ -64,38 +68,107 @@ public class DeletarCli {
 		btnVoltar.setBounds(10, 20, 48, 23);
 		frame.getContentPane().add(btnVoltar);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(162, 58, 113, 20);
-		frame.getContentPane().add(textField);
+		txtCPF = new JTextField();
+		txtCPF.setColumns(10);
+		txtCPF.setBounds(162, 58, 113, 20);
+		frame.getContentPane().add(txtCPF);
+		
+		JButton btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+
+					principal.Cliente func = new principal.Cliente();
+					String CPF = txtCPFD.getText();
+					func.setCPF(CPF);
+					func.remover();
+					txtCPF.setText("");
+					txtNome.setText("");
+					txtCPFD.setText("");
+					txtEstado.setText("");
+					txtUsuario.setText("");
+					txtEndereco.setText("");
+					btnDeletar.setEnabled(false);
+					JOptionPane.showMessageDialog(null, "Cliente deletado com sucesso");
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(null, "Erro ao deletar");
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnDeletar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnDeletar.setEnabled(false);
+		btnDeletar.setBounds(160, 208, 89, 23);
+		frame.getContentPane().add(btnDeletar);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if(txtCPF.getText().length() != 11) {
+					JOptionPane.showMessageDialog(null, "CPF não representa 11 caracteres");
+					return;
+				}
+				
+				principal.Cliente func = new principal.Cliente();
+				func.setCPF(txtCPF.getText());
+				
+				try {
+					ResultSet resultado = func.consultarCPF();
+					if(resultado.next()) {
+						txtNome.setText(resultado.getString("nome"));
+						txtCPFD.setText(resultado.getString("CPF"));
+						txtEstado.setText(resultado.getString("estado"));
+						txtUsuario.setText(resultado.getString("usuario"));
+						txtEndereco.setText(resultado.getString("endereco"));
+						btnDeletar.setEnabled(true);
+					}else {
+						JOptionPane.showMessageDialog(null, "CPF não encontrado");
+						txtCPF.setText("");
+						txtNome.setText("");
+						txtCPFD.setText("");
+						txtEstado.setText("");
+						txtUsuario.setText("");
+						txtEndereco.setText("");
+						btnDeletar.setEnabled(false);
+						
+					}
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+
+				
+			}
+		});
 		btnBuscar.setFont(new Font("Arial", Font.BOLD, 13));
 		btnBuscar.setBounds(285, 56, 89, 23);
 		frame.getContentPane().add(btnBuscar);
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(295, 116, 113, 20);
-		frame.getContentPane().add(textField_1);
+		txtUsuario = new JTextField();
+		txtUsuario.setEditable(false);
+		txtUsuario.setColumns(10);
+		txtUsuario.setBounds(295, 116, 113, 20);
+		frame.getContentPane().add(txtUsuario);
 		
 		JLabel lblNewLabel_1_1_1_1 = new JLabel("Usu\u00E1rio");
 		lblNewLabel_1_1_1_1.setFont(new Font("Arial", Font.BOLD, 13));
 		lblNewLabel_1_1_1_1.setBounds(295, 95, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_1_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(151, 116, 113, 20);
-		frame.getContentPane().add(textField_2);
+		txtEstado = new JTextField();
+		txtEstado.setEditable(false);
+		txtEstado.setColumns(10);
+		txtEstado.setBounds(151, 116, 113, 20);
+		frame.getContentPane().add(txtEstado);
 		
-		textField_3 = new JTextField();
-		textField_3.setEditable(false);
-		textField_3.setColumns(10);
-		textField_3.setBounds(151, 164, 113, 20);
-		frame.getContentPane().add(textField_3);
+		txtEndereco = new JTextField();
+		txtEndereco.setEditable(false);
+		txtEndereco.setColumns(10);
+		txtEndereco.setBounds(151, 164, 113, 20);
+		frame.getContentPane().add(txtEndereco);
 		
 		JLabel lblNewLabel_1_1_3 = new JLabel("Endere\u00E7o");
 		lblNewLabel_1_1_3.setFont(new Font("Arial", Font.BOLD, 13));
@@ -117,28 +190,22 @@ public class DeletarCli {
 		lblNewLabel_1_1_2.setBounds(10, 147, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_2);
 		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(10, 164, 113, 20);
-		frame.getContentPane().add(textField_4);
+		txtCPFD = new JTextField();
+		txtCPFD.setEditable(false);
+		txtCPFD.setColumns(10);
+		txtCPFD.setBounds(10, 164, 113, 20);
+		frame.getContentPane().add(txtCPFD);
 		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		textField_5.setColumns(10);
-		textField_5.setBounds(10, 116, 113, 20);
-		frame.getContentPane().add(textField_5);
+		txtNome = new JTextField();
+		txtNome.setEditable(false);
+		txtNome.setColumns(10);
+		txtNome.setBounds(10, 116, 113, 20);
+		frame.getContentPane().add(txtNome);
 		
 		JLabel lblNewLabel_1 = new JLabel("Insira o CPF");
 		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 13));
 		lblNewLabel_1.setBounds(72, 60, 86, 14);
 		frame.getContentPane().add(lblNewLabel_1);
-		
-		JButton btnDeletar = new JButton("Deletar");
-		btnDeletar.setFont(new Font("Arial", Font.BOLD, 13));
-		btnDeletar.setEnabled(false);
-		btnDeletar.setBounds(160, 208, 89, 23);
-		frame.getContentPane().add(btnDeletar);
 		
 		JLabel lblDeletarCliente = new JLabel("Deletar Cliente");
 		lblDeletarCliente.setFont(new Font("Arial", Font.BOLD, 22));
