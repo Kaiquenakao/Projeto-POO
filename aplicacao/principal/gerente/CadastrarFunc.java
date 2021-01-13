@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JToggleButton;
 
 
 
@@ -68,7 +69,7 @@ public class CadastrarFunc {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 527, 275);
+		frame.setBounds(100, 100, 527, 317);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -128,19 +129,23 @@ public class CadastrarFunc {
 		
 		lblNewLabel_6 = new JLabel("Endere\u00E7o");
 		lblNewLabel_6.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_6.setBounds(294, 120, 69, 14);
+		lblNewLabel_6.setBounds(294, 122, 69, 14);
 		frame.getContentPane().add(lblNewLabel_6);
 		
 		txtEndereco = new JTextField();
 		txtEndereco.setColumns(10);
-		txtEndereco.setBounds(376, 114, 125, 20);
+		txtEndereco.setBounds(376, 116, 125, 20);
 		frame.getContentPane().add(txtEndereco);
 		
 		JComboBox comboEstado = new JComboBox();
-		comboEstado.setBounds(376, 151, 48, 20);
+		comboEstado.setBounds(376, 149, 125, 20);
 		comboEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RS", "SC", "SE", "SP", "TO"}));
 		frame.getContentPane().add(comboEstado);
 		
+		JComboBox comboAcesso = new JComboBox();
+		comboAcesso.setBounds(376, 182, 125, 20);
+		comboAcesso.setModel(new javax.swing.DefaultComboBoxModel(new String[] {"Gerente", "Funcionario"}));
+		frame.getContentPane().add(comboAcesso);
 		
 		JLabel lblNewLabel_2_1 = new JLabel("Confirma\u00E7\u00E3o Senha");
 		lblNewLabel_2_1.setFont(new Font("Arial", Font.BOLD, 15));
@@ -206,7 +211,8 @@ public class CadastrarFunc {
 				principal.Funcionario func = new principal.Funcionario(nome, usuario, CPF, endereco, contato, estado);
 				
 				try {
-					func.criarLogin(senha);
+					String acesso = comboAcesso.getSelectedItem().toString();
+					func.criarLogin(senha, acesso);
 					func.adicionar();
 					JOptionPane.showMessageDialog(null, "Dados inseridos");
 				} catch (SQLException e) {
@@ -226,12 +232,12 @@ public class CadastrarFunc {
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 13));
-		btnNewButton.setBounds(211, 188, 101, 38);
+		btnNewButton.setBounds(213, 223, 101, 38);
 		frame.getContentPane().add(btnNewButton);
 		
 		JLabel lblNewLabel_6_1 = new JLabel("Estado");
 		lblNewLabel_6_1.setFont(new Font("Arial", Font.BOLD, 15));
-		lblNewLabel_6_1.setBounds(296, 154, 69, 14);
+		lblNewLabel_6_1.setBounds(296, 152, 69, 14);
 		frame.getContentPane().add(lblNewLabel_6_1);
 		
 		JButton btnVoltar = new JButton("<");
@@ -245,6 +251,13 @@ public class CadastrarFunc {
 		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
 		btnVoltar.setBounds(10, 20, 48, 23);
 		frame.getContentPane().add(btnVoltar);
+		
+		JLabel lblNewLabel_6_1_1 = new JLabel("Acesso");
+		lblNewLabel_6_1_1.setFont(new Font("Arial", Font.BOLD, 15));
+		lblNewLabel_6_1_1.setBounds(296, 185, 69, 14);
+		frame.getContentPane().add(lblNewLabel_6_1_1);
+		
+	
 		
 
 	

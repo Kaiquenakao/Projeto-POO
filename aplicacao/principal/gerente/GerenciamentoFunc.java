@@ -41,17 +41,17 @@ public class GerenciamentoFunc {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 452, 281);
+		frame.setBounds(100, 100, 432, 271);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Gerenciamento Funcion\u00E1rio");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel.setBounds(80, 11, 281, 36);
+		lblNewLabel.setBounds(67, 11, 281, 36);
 		frame.getContentPane().add(lblNewLabel);
 		
-		JButton btnVendas = new JButton("Cadastrar");
-		btnVendas.addActionListener(new ActionListener() {
+		JButton btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				principal.gerente.CadastrarFunc tela = new principal.gerente.CadastrarFunc();
 				tela.MostrarTela();
@@ -63,29 +63,29 @@ public class GerenciamentoFunc {
 				
 			}
 		});
-		btnVendas.setFont(new Font("Arial", Font.BOLD, 12));
-		btnVendas.setBounds(87, 80, 105, 36);
-		frame.getContentPane().add(btnVendas);
+		btnCadastrar.setFont(new Font("Arial", Font.BOLD, 12));
+		btnCadastrar.setBounds(72, 80, 105, 36);
+		frame.getContentPane().add(btnCadastrar);
 		
-		JButton btnProdutos = new JButton("Editar");
-		btnProdutos.addActionListener(new ActionListener() {
+		JButton btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				EditarFunc tela = new EditarFunc();
 				tela.MostrarTela();
 				frame.setVisible(false);
 			}
 		});
-		btnProdutos.setFont(new Font("Arial", Font.BOLD, 12));
-		btnProdutos.setBounds(256, 80, 105, 36);
-		frame.getContentPane().add(btnProdutos);
+		btnEditar.setFont(new Font("Arial", Font.BOLD, 12));
+		btnEditar.setBounds(241, 80, 105, 36);
+		frame.getContentPane().add(btnEditar);
 		
-		JButton btnClientes = new JButton("Consultar");
-		btnClientes.setFont(new Font("Arial", Font.BOLD, 12));
-		btnClientes.setBounds(87, 164, 105, 36);
-		frame.getContentPane().add(btnClientes);
+		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.setFont(new Font("Arial", Font.BOLD, 12));
+		btnConsultar.setBounds(72, 164, 105, 36);
+		frame.getContentPane().add(btnConsultar);
 		
-		JButton btnFuncionarios = new JButton("Remover");
-		btnFuncionarios.addActionListener(new ActionListener() {
+		JButton btnRemover = new JButton("Remover");
+		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DeletarFunc window = new DeletarFunc();
 				window.MostrarTela();
@@ -93,9 +93,9 @@ public class GerenciamentoFunc {
 				
 			}
 		});
-		btnFuncionarios.setFont(new Font("Arial", Font.BOLD, 12));
-		btnFuncionarios.setBounds(256, 164, 105, 36);
-		frame.getContentPane().add(btnFuncionarios);
+		btnRemover.setFont(new Font("Arial", Font.BOLD, 12));
+		btnRemover.setBounds(241, 164, 105, 36);
+		frame.getContentPane().add(btnRemover);
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

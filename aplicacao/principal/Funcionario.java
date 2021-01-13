@@ -95,6 +95,17 @@ public class Funcionario extends Usuario {
 		comando.execute();
 	}
 	
+	public void criarLogin(String senha, String acesso) throws SQLException {
+		if(!dadosValidos() && senha.length() < 8) {
+			JOptionPane.showMessageDialog(null, "Dados da classe inválidos");
+			return;
+		}
+		java.sql.Connection conn = ConexaoBD.generateConnection();
+		String query = String.format("insert into login(usuario, senha, nivel) values('%1$2s', '%2$2s', '%3$2s')", getUsuario(), senha, acesso);
+		PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
+		comando.execute();
+	}
+	
 	
 
 }
