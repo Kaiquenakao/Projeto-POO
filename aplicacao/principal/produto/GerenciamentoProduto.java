@@ -1,5 +1,6 @@
 package principal.produto;
 
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;

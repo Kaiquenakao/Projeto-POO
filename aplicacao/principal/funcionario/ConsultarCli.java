@@ -83,6 +83,10 @@ public class ConsultarCli {
 				DLM.addElement(resultado.getString("CPF") + " - " + resultado.getString("nome"));
 				listaCPFs.add(resultado.getString("CPF"));
 			}
+		}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		list.setModel(DLM);
 		JButton btnVoltar = new JButton("<");
@@ -197,11 +201,7 @@ public class ConsultarCli {
 		lblNewLabel_1_1_1_2.setBounds(591, 120, 52, 14);
 		frame.getContentPane().add(lblNewLabel_1_1_1_2);
 		
-		
-		}catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

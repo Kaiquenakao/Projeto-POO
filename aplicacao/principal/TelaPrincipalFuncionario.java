@@ -7,6 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import principal.venda.CadastrarVen;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class TelaPrincipalFuncionario {
 
 	private JFrame frame;
@@ -49,6 +54,13 @@ public class TelaPrincipalFuncionario {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnVendas = new JButton("Vendas");
+		btnVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastrarVen tela = new CadastrarVen();
+				tela.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
 		btnVendas.setFont(new Font("Arial", Font.BOLD, 12));
 		btnVendas.setBounds(87, 80, 105, 36);
 		frame.getContentPane().add(btnVendas);

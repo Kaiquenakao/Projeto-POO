@@ -92,7 +92,12 @@ public class Login_AW {
 					PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
 					ResultSet resultado = comando.executeQuery();
 					if(resultado.next()) {
-				
+						String query2 = "select * from funcionario where usuario = '" + usuario + "'";
+						PreparedStatement comando2 = (PreparedStatement) conn.prepareStatement(query2);
+						ResultSet resultado2 = comando2.executeQuery();
+						if(resultado2.next()) {
+						Funcionario.CPFlogado = resultado2.getString("CPF");
+						}
 						String nivel = resultado.getString("nivel");
 						if(nivel.equals("Funcionario")) {
 							TelaPrincipalFuncionario tela = new TelaPrincipalFuncionario();
