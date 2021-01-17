@@ -55,7 +55,7 @@ public class GerenciamentoProduto {
 			}
 		});
 		btnFuncionarios.setFont(new Font("Arial", Font.BOLD, 12));
-		btnFuncionarios.setBounds(220, 175, 105, 36);
+		btnFuncionarios.setBounds(220, 181, 105, 36);
 		frame.getContentPane().add(btnFuncionarios);
 		
 		JButton btnProdutos = new JButton("Editar");
@@ -67,7 +67,7 @@ public class GerenciamentoProduto {
 			}
 		});
 		btnProdutos.setFont(new Font("Arial", Font.BOLD, 12));
-		btnProdutos.setBounds(220, 91, 105, 36);
+		btnProdutos.setBounds(220, 97, 105, 36);
 		frame.getContentPane().add(btnProdutos);
 		
 		JButton btnVendas = new JButton("Cadastrar");
@@ -79,7 +79,7 @@ public class GerenciamentoProduto {
 			}
 		});
 		btnVendas.setFont(new Font("Arial", Font.BOLD, 12));
-		btnVendas.setBounds(51, 91, 105, 36);
+		btnVendas.setBounds(51, 97, 105, 36);
 		frame.getContentPane().add(btnVendas);
 		
 		JButton btnClientes = new JButton("Consultar");
@@ -91,13 +91,25 @@ public class GerenciamentoProduto {
 			}
 		});
 		btnClientes.setFont(new Font("Arial", Font.BOLD, 12));
-		btnClientes.setBounds(51, 175, 105, 36);
+		btnClientes.setBounds(51, 181, 105, 36);
 		frame.getContentPane().add(btnClientes);
 		
 		JLabel lblNewLabel = new JLabel("Gerenciamento Produto");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel.setBounds(51, 22, 281, 36);
+		lblNewLabel.setBounds(51, 28, 281, 36);
 		frame.getContentPane().add(lblNewLabel);
+		
+		JButton btnVoltar = new JButton("<");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				principal.TelaPrincipal tela = new principal.TelaPrincipal();
+				tela.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
+		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnVoltar.setBounds(10, 11, 48, 23);
+		frame.getContentPane().add(btnVoltar);
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

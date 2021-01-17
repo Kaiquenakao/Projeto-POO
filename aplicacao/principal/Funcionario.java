@@ -9,7 +9,8 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class Funcionario extends Usuario {
 	public static String CPFlogado;
-
+	public static boolean gerente;
+	
 	public Funcionario(String nome, String usuario, String CPF, String endereco, String contato, String estado) {
 		super(nome, usuario, CPF, endereco, contato, estado);
 	}

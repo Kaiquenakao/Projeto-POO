@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import principal.Funcionario;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -97,6 +100,25 @@ public class GerenciamentoCli {
 		btnProdutos.setFont(new Font("Arial", Font.BOLD, 12));
 		btnProdutos.setBounds(253, 80, 105, 36);
 		frame.getContentPane().add(btnProdutos);
+		
+		JButton btnVoltar = new JButton("<");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(Funcionario.gerente) {
+					principal.TelaPrincipal tela = new principal.TelaPrincipal();
+					tela.MostrarTela();
+					frame.setVisible(false);
+				}
+				else {
+					principal.TelaPrincipalFuncionario tela = new principal.TelaPrincipalFuncionario();
+					tela.MostrarTela();
+					frame.setVisible(false);
+				}
+			}
+		});
+		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnVoltar.setBounds(10, 11, 48, 23);
+		frame.getContentPane().add(btnVoltar);
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

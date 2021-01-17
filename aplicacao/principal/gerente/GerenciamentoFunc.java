@@ -80,6 +80,13 @@ public class GerenciamentoFunc {
 		frame.getContentPane().add(btnEditar);
 		
 		JButton btnConsultar = new JButton("Consultar");
+		btnConsultar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				principal.gerente.ConsultarFunc tela = new principal.gerente.ConsultarFunc();
+				tela.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
 		btnConsultar.setFont(new Font("Arial", Font.BOLD, 12));
 		btnConsultar.setBounds(72, 164, 105, 36);
 		frame.getContentPane().add(btnConsultar);
@@ -96,6 +103,18 @@ public class GerenciamentoFunc {
 		btnRemover.setFont(new Font("Arial", Font.BOLD, 12));
 		btnRemover.setBounds(241, 164, 105, 36);
 		frame.getContentPane().add(btnRemover);
+		
+		JButton btnVoltar = new JButton("<");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				principal.TelaPrincipal tela = new principal.TelaPrincipal();
+				tela.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
+		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnVoltar.setBounds(9, 11, 48, 23);
+		frame.getContentPane().add(btnVoltar);
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

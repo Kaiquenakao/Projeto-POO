@@ -9,6 +9,9 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+
+import principal.Funcionario;
+
 import javax.swing.JPasswordField;
 import javax.swing.JComboBox;
 import java.awt.event.ActionListener;

@@ -131,6 +131,9 @@ public class CadastrarVen {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				CadastrarVen tela = new CadastrarVen();
+				tela.MostrarTela();
+				frame.setVisible(false);
 			}
 		});
 		btnFinalizar.setFont(new Font("Arial", Font.BOLD, 13));
@@ -156,6 +159,7 @@ public class CadastrarVen {
 				else {
 					btnNotaFiscal.setEnabled(false);
 				}
+				btnFinalizar.setEnabled(false);
 			}
 		});
 		btnNewButton.setBounds(169, 120, 57, 23);
@@ -171,7 +175,6 @@ public class CadastrarVen {
 					JOptionPane.showMessageDialog(null, "Selecione um produto do carrinho");
 					return;
 				}
-				//System.out.println(listaPrecosCarrinho.get(list2.getSelectedIndex()));
 				listaCarrinhoCod.remove(list2.getSelectedIndex());
 				listaPrecosCarrinho.remove(list2.getSelectedIndex());
 				listaCarrinho.remove(list2.getSelectedIndex());
@@ -182,6 +185,7 @@ public class CadastrarVen {
 				else {
 					btnNotaFiscal.setEnabled(false);
 				}
+				btnFinalizar.setEnabled(false);
 			}
 		});
 		btnNewButton_1.setBounds(169, 174, 57, 23);
@@ -246,6 +250,7 @@ public class CadastrarVen {
 				}
 				txtPreco.setText(soma + "");
 				btnFinalizar.setEnabled(true);
+				btnNotaFiscal.setEnabled(false);
 			}
 		});
 	
@@ -303,6 +308,25 @@ public class CadastrarVen {
 		txtPreco.setColumns(10);
 		txtPreco.setBounds(383, 398, 92, 20);
 		frame.getContentPane().add(txtPreco);
+		
+		JButton btnVoltar = new JButton("<");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(Funcionario.gerente) {
+					principal.TelaPrincipal tela = new principal.TelaPrincipal();
+					tela.MostrarTela();
+					frame.setVisible(false);
+				}
+				else {
+					principal.TelaPrincipalFuncionario tela = new principal.TelaPrincipalFuncionario();
+					tela.MostrarTela();
+					frame.setVisible(false);
+				}
+			}
+		});
+		btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
+		btnVoltar.setBounds(10, 11, 48, 23);
+		frame.getContentPane().add(btnVoltar);
 		
 
 	}

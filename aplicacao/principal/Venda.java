@@ -49,8 +49,6 @@ public class Venda{
 
 	        // throw an exception from here
 	    } 
-	    System.out.println("Key returned from getGeneratedKeys():"
-	            + autoIncKeyFromApi);
 	    
 	    this.codnota = autoIncKeyFromApi;
 	    
@@ -85,14 +83,28 @@ public class Venda{
 	}
 	
 	
-	public ResultSet consultar() throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public static ResultSet consultarNotaFiscal() throws SQLException {
+		java.sql.Connection conn = ConexaoBD.generateConnection();
+		String query = "select * from venda";
+		PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
+		ResultSet resultado = comando.executeQuery();
+		return resultado;
 	}
 	
-	public void editar() throws SQLException {
-		// TODO Auto-generated method stub
-		
+	public ResultSet consultarProdutosVenda() throws SQLException {
+		java.sql.Connection conn = ConexaoBD.generateConnection();
+		String query = "select * from venda_produto where codvenda = '" + getCodnota() + "'";
+		PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
+		ResultSet resultado = comando.executeQuery();
+		return resultado;
+	}
+	
+	public ResultSet consultarVendaID() throws SQLException {
+		java.sql.Connection conn = ConexaoBD.generateConnection();
+		String query = "select * from venda where codnota = '" + getCodnota() + "'";
+		PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
+		ResultSet resultado = comando.executeQuery();
+		return resultado;
 	}
 	
 	

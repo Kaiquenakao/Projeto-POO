@@ -87,7 +87,6 @@ public class Login_AW {
 					java.sql.Connection conn = ConexaoBD.generateConnection();
 					String usuario = txtUsuario.getText();
 					String senha = new String(txtSenha.getPassword());
-					System.out.println(senha);
 					String query = "select * from login where usuario = '" + usuario + "' and senha = '" + senha + "'" ;
 					PreparedStatement comando = (PreparedStatement) conn.prepareStatement(query);
 					ResultSet resultado = comando.executeQuery();
@@ -97,6 +96,7 @@ public class Login_AW {
 						ResultSet resultado2 = comando2.executeQuery();
 						if(resultado2.next()) {
 						Funcionario.CPFlogado = resultado2.getString("CPF");
+						Funcionario.gerente = resultado.getString("nivel").equals("Gerente");
 						}
 						String nivel = resultado.getString("nivel");
 						if(nivel.equals("Funcionario")) {

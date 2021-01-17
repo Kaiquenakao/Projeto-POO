@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import principal.funcionario.GerenciamentoCli;
 import principal.venda.CadastrarVen;
 
 import java.awt.event.ActionListener;
@@ -48,9 +49,9 @@ public class TelaPrincipalFuncionario {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Tela Principal");
+		JLabel lblNewLabel = new JLabel("Tela Principal - Funcion\u00E1rio");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 25));
-		lblNewLabel.setBounds(136, 11, 163, 36);
+		lblNewLabel.setBounds(59, 11, 327, 36);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnVendas = new JButton("Vendas");
@@ -62,13 +63,32 @@ public class TelaPrincipalFuncionario {
 			}
 		});
 		btnVendas.setFont(new Font("Arial", Font.BOLD, 12));
-		btnVendas.setBounds(87, 80, 105, 36);
+		btnVendas.setBounds(59, 81, 145, 36);
 		frame.getContentPane().add(btnVendas);
 		
 		JButton btnClientes = new JButton("Clientes");
+		btnClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				GerenciamentoCli cli = new GerenciamentoCli();
+				cli.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
 		btnClientes.setFont(new Font("Arial", Font.BOLD, 12));
-		btnClientes.setBounds(256, 80, 105, 36);
+		btnClientes.setBounds(228, 81, 145, 36);
 		frame.getContentPane().add(btnClientes);
+		
+		JButton btnConsultarVendas = new JButton("Consultar Vendas");
+		btnConsultarVendas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				principal.venda.ConsultarVen tela = new principal.venda.ConsultarVen();
+				tela.MostrarTela();
+				frame.setVisible(false);
+			}
+		});
+		btnConsultarVendas.setFont(new Font("Arial", Font.BOLD, 12));
+		btnConsultarVendas.setBounds(59, 147, 145, 36);
+		frame.getContentPane().add(btnConsultarVendas);
 	}
 	public void MostrarTela() {
 		frame.setVisible(true);

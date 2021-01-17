@@ -203,19 +203,13 @@ public class ConsultarFunc {
 			btnVoltar.setFont(new Font("Arial", Font.BOLD, 13));
 			btnVoltar.setBounds(10, 11, 48, 23);
 			frame.getContentPane().add(btnVoltar);
-			
-			
-
-			
-			
+				
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-
-		
-
-		
+		}	
+	}
+	public void MostrarTela() {
+		frame.setVisible(true);
 	}
 }
